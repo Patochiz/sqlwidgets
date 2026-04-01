@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS llx_sqlwidgets_widget (
+    rowid         INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    entity        INTEGER DEFAULT 1,
+    ref           VARCHAR(128) NOT NULL,
+    label         VARCHAR(255) NOT NULL,
+    description   TEXT,
+    widget_type   VARCHAR(32) NOT NULL DEFAULT 'number',
+    datasource    TEXT NOT NULL,
+    color_primary     VARCHAR(32) DEFAULT '#3B82F6',
+    color_secondary   VARCHAR(32) DEFAULT '#10B981',
+    color_accent      VARCHAR(32) DEFAULT '#F59E0B',
+    color_bg          VARCHAR(32) DEFAULT '#1E293B',
+    color_text        VARCHAR(32) DEFAULT '#FFFFFF',
+    chart_type    VARCHAR(32) DEFAULT 'bar',
+    type_options  TEXT,
+    position      INTEGER DEFAULT 0,
+    active        TINYINT DEFAULT 1,
+    date_creation DATETIME,
+    tms           TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    fk_user_creat INTEGER,
+    fk_user_modif INTEGER
+) ENGINE=innodb;
