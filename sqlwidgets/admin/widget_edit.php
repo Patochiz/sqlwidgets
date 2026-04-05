@@ -32,11 +32,11 @@ if ($action === 'save') {
     $object->description   = GETPOST('description','restricthtml');
     $object->widget_type   = GETPOST('widget_type','aZ09');
     $object->datasource    = GETPOST('datasource','nohtml');
-    $object->color_primary = GETPOST('color_primary','alphanohtml');
-    $object->color_secondary = GETPOST('color_secondary','alphanohtml');
-    $object->color_accent  = GETPOST('color_accent','alphanohtml');
-    $object->color_bg      = GETPOST('color_bg','alphanohtml');
-    $object->color_text    = GETPOST('color_text','alphanohtml');
+    $object->color_primary = GETPOST('color_primary','nohtml');
+    $object->color_secondary = GETPOST('color_secondary','nohtml');
+    $object->color_accent  = GETPOST('color_accent','nohtml');
+    $object->color_bg      = GETPOST('color_bg','nohtml');
+    $object->color_text    = GETPOST('color_text','nohtml');
     $object->chart_type    = GETPOST('chart_type','aZ09');
     $object->position      = GETPOST('position','int');
     $object->active        = GETPOST('active','int');
@@ -56,7 +56,7 @@ if ($action === 'save') {
         $cols_json = GETPOST('opt_columns','nohtml');
         $opts['columns'] = json_decode($cols_json, true) ?: array();
     } elseif ($object->widget_type === 'chart') {
-        $opts['colors'] = array_filter(array_map('trim', explode(',', GETPOST('opt_colors','alphanohtml'))));
+        $opts['colors'] = array_filter(array_map('trim', explode(',', GETPOST('opt_colors','nohtml'))));
     }
     $object->type_options = $opts;
 
