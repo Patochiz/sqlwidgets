@@ -379,7 +379,7 @@ $opts = $object->type_options;
 </div>
 
 <!-- Options spécifiques : Tableau -->
-<div id="panel-table" class="sw-section type-panel <?php echo $object->widget_type==='table'?$langs->trans("WidgetActif"):''; ?>">
+<div id="panel-table" class="sw-section type-panel <?php echo $object->widget_type==='table'?'active':''; ?>">
 <h3><?php echo $langs->trans("WidgetOptionTable") ?></h3>
 <p style="font-size:12px;color:#666;margin-top:0"><?php echo $langs->trans("WidgetConfigChamps") ?></p>
 <div id="columns-builder">
@@ -440,7 +440,7 @@ $opts = $object->type_options;
 </div>
 
 <!-- Options spécifiques : Graphique -->
-<div id="panel-chart" class="sw-section type-panel <?php echo $object->widget_type==='chart'?$langs->trans("WidgetActif"):''; ?>">
+<div id="panel-chart" class="sw-section type-panel <?php echo $object->widget_type==='chart'?'active':''; ?>">
 <h3><?php echo $langs->trans("WidgetOptionGraphique") ?></h3>
 <p style="font-size:12px;color:#666;margin-top:0"><?php echo $langs->trans("WidgetLibelleGraph") ?></p>
 <div class="sw-row">
