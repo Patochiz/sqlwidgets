@@ -188,11 +188,12 @@ class box_sqlwidget_base extends ModeleBoxes
         $out .= 'var pal=(o.colors&&o.colors.length)?o.colors:[c.primary,c.secondary,c.accent,"#8B5CF6","#EF4444","#14B8A6"];';
         $out .= 'el.innerHTML=\'<canvas id="swc_'.$id.'" style="max-height:280px"></canvas>\';';
         $out .= 'var ctx=document.getElementById("swc_'.$id.'").getContext("2d");';
-        $out .= 'var ds=vk.map(function(k,i){return{label:k,';
-        $out .= 'data:rows.map(function(r){return parseFloat(r[k])||0;}),';
-        $out .= 'backgroundColor:ct==="line"?"transparent":(pal[i%pal.length]+(ct==="doughnut"?"":"CC")),';
-        $out .= 'borderColor:pal[i%pal.length],borderWidth:ct==="line"?2:1,';
-        $out .= 'tension:0.4,fill:false,pointBackgroundColor:pal[i%pal.length]};});';
+        $out .= 'var ds=vk.map(function(k,i){var bg,bc;';
+        $out .= 'if(ct==="doughnut"||ct==="pie"){bg=rows.map(function(r,j){return pal[j%pal.length];});bc=bg;}';
+        $out .= 'else{bg=ct==="line"?"transparent":(pal[i%pal.length]+"CC");bc=pal[i%pal.length];}';
+        $out .= 'return{label:k,data:rows.map(function(r){return parseFloat(r[k])||0;}),';
+        $out .= 'backgroundColor:bg,borderColor:bc,borderWidth:ct==="line"?2:1,';
+        $out .= 'tension:0.4,fill:false,pointBackgroundColor:bc};});';
         $out .= 'new Chart(ctx,{type:ct,data:{labels:lbs,datasets:ds},options:{responsive:true,';
         $out .= 'plugins:{legend:{labels:{color:c.text}}},';
         $out .= 'scales:ct==="doughnut"?{}:{x:{ticks:{color:c.text},grid:{color:"rgba(255,255,255,.08)"}},';
