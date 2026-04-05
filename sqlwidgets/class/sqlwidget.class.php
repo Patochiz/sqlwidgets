@@ -212,15 +212,22 @@ class SqlWidget
     public function fetchAllForUser($user,$number=false)
     {
         global $conf;
-//        if ($user->admin) return $this->fetchAll();
-        // Get user groups
-        $sql = "SELECT DISTINCT w.rowid FROM ".MAIN_DB_PREFIX."sqlwidgets_widget w";
-        $sql .= " INNER JOIN ".MAIN_DB_PREFIX."sqlwidgets_widget_access a ON a.fk_widget=w.rowid";
-        $sql .= " INNER JOIN ".MAIN_DB_PREFIX."usergroup_user ugu ON ugu.fk_usergroup=a.fk_group";
-        $sql .= " WHERE ugu.fk_user=".$user->id." AND w.entity=".$conf->entity." AND w.active=1";
-	if($number) $sql .= " AND w.widget_type='number'";
-	else $sql .= " AND w.widget_type<>'number'";
-        $sql .= " ORDER BY w.position ASC, w.rowid ASC";
+
+        if ($number) {
+            // Number widgets appear automatically — no access check needed
+            $sql = "SELECT DISTINCT w.rowid FROM ".MAIN_DB_PREFIX."sqlwidgets_widget w";
+            $sql .= " WHERE w.entity=".$conf->entity." AND w.active=1";
+            $sql .= " AND w.widget_type='number'";
+            $sql .= " ORDER BY w.position ASC, w.rowid ASC";
+        } else {
+            // Table/chart widgets require group-based access
+            $sql = "SELECT DISTINCT w.rowid FROM ".MAIN_DB_PREFIX."sqlwidgets_widget w";
+            $sql .= " INNER JOIN ".MAIN_DB_PREFIX."sqlwidgets_widget_access a ON a.fk_widget=w.rowid";
+            $sql .= " INNER JOIN ".MAIN_DB_PREFIX."usergroup_user ugu ON ugu.fk_usergroup=a.fk_group";
+            $sql .= " WHERE ugu.fk_user=".$user->id." AND w.entity=".$conf->entity." AND w.active=1";
+            $sql .= " AND w.widget_type<>'number'";
+            $sql .= " ORDER BY w.position ASC, w.rowid ASC";
+        }
         $res = $this->db->query($sql);
         $list = array();
         if ($res) {
